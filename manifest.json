@@ -23,7 +23,8 @@
     "content_scripts": [
         {
             "matches": [ "*://*/*" ],
-            "js": [ "content.js" ]
+            "js": [ "content.js", "libraries/jquery.min.js"  ]
+
         }
     ],
 
