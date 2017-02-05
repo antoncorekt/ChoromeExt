@@ -18,10 +18,8 @@ hr{
     text-align: center;
 }
 textarea {
-    width:200px;
-    resize:none;
-    overflow:hidden;
-    font-size:18px;
-    height:1.1em;
-    padding:2px;
+    box-sizing: border-box;
+    resize: none;
+    width: 470px;
+    margin-top: 7px;
 }

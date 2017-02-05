@@ -2,6 +2,16 @@
  * Created by Anton on 04.02.2017.
  */
 
+$(document).ready(function(){
+    jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+    var offset = this.offsetHeight - this.clientHeight;
+ 
+    var resizeTextarea = function(el) {
+        jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+    };
+    jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+});});
+
 
 
 console.log("работаю");
@@ -45,3 +55,4 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     }
 });
 
+>>>>>>> 9ed1fe2038da1ece352a93f6590655f1247e9a51
