@@ -31,7 +31,7 @@
 
     "browser_action": {
         "default_title": "abracadabra",
-        "default_icon": "",
+        "default_icon": "icon.png",
         "default_popup": "popup.html"
     }
 }
