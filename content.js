@@ -1,6 +1,9 @@
 /**
  * Created by Anton on 04.02.2017.
  */
+
+
+
 console.log("работаю");
 
 var node = document.getElementsByClassName("f_post post page_block all own");
@@ -41,3 +44,4 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         sendResponse(document.all[0].outerHTML);
     }
 });
+
