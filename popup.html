@@ -8,17 +8,18 @@
     <script src="libraries/bootstrap-colorpicker.js"></script>
      <script src="background.js"></script>
       <script src="content.js"></script>
+       <script src="func.js"></script>
     <link href="libraries/bootstrap-colorpicker.min.css" rel="stylesheet">
     <link href="style/style.css" rel="stylesheet" type="text/css"/>
     <title>Set web site</title>
    
 </head>
  
-<body>
+<body class="body-cont">
     <div class="container-fluid">
          <div class="row">
-             <h1>Настройки</h1>
-             <hr/>
+             <h1 class="h1Title">Настройки</h1>
+             <hr class="hr-in-title"/>
          </div>
          <div class="row">
              <div class="col-xs-9 col-ms-10">
@@ -44,7 +45,7 @@
                 Выключить рекламу
            </div>
            <div class="col-sm-1 col-ms-1">
-               <button type="button" class="btn btn-danger btn-xs" id="on-off-adv-button">Выключить</button>           
+               <button type="button" class="btn btn-danger btn-xs" id="on-off-adv-button" disabled>Выключить</button>           
            </div>
            <hr class="hr-in-text"/>
         </div>
@@ -58,7 +59,7 @@
                </div>
                <br>
                <div class="col-sm-10" id="submit-form">
-                   <button type="submit" class="btn btn-success btn-sm" id="submit">Сохранить</button>
+                   <button type="submit" class="btn btn-success btn-sm" id="submit" disabled>Сохранить</button>
                </div>
                <br>
             </form>

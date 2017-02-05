@@ -1,10 +1,10 @@
-body{
+.body-cont{
     width: 500px;
 }
-h1 {
+.h1Title {
      text-align: center;
 }
-hr{
+.hr-in-title{
     margin-bottom: 0.5em;
 }
 .hr-in-text{
@@ -17,7 +17,7 @@ hr{
 #submit-form{
     text-align: center;
 }
-textarea {
+#words {
     box-sizing: border-box;
     resize: none;
     width: 470px;
