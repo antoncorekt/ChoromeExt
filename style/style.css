@@ -1,0 +1,25 @@
+body{
+    width: 500px;
+}
+h1 {
+     text-align: center;
+}
+hr{
+    margin-bottom: 0.5em;
+}
+.hr-in-text{
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+}
+#submit-form{
+    text-align: center;
+}
+textarea {
+    box-sizing: border-box;
+    resize: none;
+    width: 470px;
+    margin-top: 7px;
+}
