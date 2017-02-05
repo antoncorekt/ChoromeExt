@@ -10,7 +10,9 @@
         "bookmarks",
         "http://www.blogger.com/",
         "http://*.google.com/",
-        "unlimitedStorage"
+        "unlimitedStorage",
+      "activeTab",
+      "<all_urls>"
     ],
 
 
