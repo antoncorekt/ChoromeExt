@@ -2,9 +2,8 @@
  * Created by Anton on 04.02.2017.
  */
 
-
 var count=0;
-var pre_count=0;
+var pre_count=-1;
 
 window.onload = function() {
     window.setInterval( function() {
@@ -14,7 +13,7 @@ window.onload = function() {
 
        // console.log(count.length);
 
-    }, 100);
+    }, 75);
 }
 
 
@@ -33,27 +32,27 @@ function canUpdate() {
 
 window.setInterval( function() {
 
-    var node = document.getElementsByClassName('wall_marked_as_ads');
+    if (canUpdate()) {
+        var node = document.getElementsByClassName('wall_marked_as_ads');
 
-    console.log("ну же -> " + node);
 
-
-    for (var i = 0; i < node.length; i++) {
-        if (node[i].parentNode) {
-            node[i].parentNode.parentNode.parentNode.removeChild(node[i].parentNode.parentNode);
-            console.log("delete")
+        for (var i = 0; i < node.length; i++) {
+            if (node[i].parentNode) {
+                node[i].parentNode.parentNode.parentNode.removeChild(node[i].parentNode.parentNode);
+                console.log("delete")
+            }
+            else {
+                console.log("not parent");
+            }
         }
-        else {
-            console.log("not parent");
+
+        node = document.getElementById("ads_left");
+
+        if (node != undefined) {
+            node.remove();
         }
+
     }
-
-    node = document.getElementById("ads_left");
-
-    if (node != undefined){
-        node.remove();
-    }
-
 
 
 }, 100);
