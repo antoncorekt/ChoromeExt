@@ -2,10 +2,16 @@
  * Created by Anton on 04.02.2017.
  */
 
-
+var currentURL;
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
     console.log("Work " + tab.url);
+
+    
+chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+    currentURL = tabs[0].url;
+    console.log("URL:   " + currentURL);
+});
 
     // защита
 
@@ -101,7 +107,6 @@ window.onload = function() {
 
     }, 1000);
 };*/
-
 
 
 
