@@ -21,9 +21,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
 
             if (tabs.url === "https://vk.com/donetsk") {
 
-                chrome.tabs.sendMessage(tabs.id, { text: "report_back" },
-                    doStuffWithDOM);
-
                 function modifyDOM() {
 
                     // content logic hear with document
