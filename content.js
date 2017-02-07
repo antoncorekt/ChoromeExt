@@ -1,20 +1,17 @@
 /**
+ * Content script
+ *
  * Created by Anton on 04.02.2017.
  */
 
-
 var count=0;
-var pre_count=0;
+var pre_count=-1;
 
 window.onload = function() {
     window.setInterval( function() {
         var t = document.getElementsByClassName('post_content');
-
         count = t.length;
-
-       // console.log(count.length);
-
-    }, 100);
+    }, 75);
 }
 
 
@@ -31,50 +28,89 @@ function canUpdate() {
 
 }
 
-window.setInterval( function() {
+function createElement(id) {
+    var con = document.createElement('div');
 
-    var node = document.getElementsByClassName('wall_marked_as_ads');
+    con.innerHTML = '<div class="' + id + '" onclick="var t = document.getElementById(' + id + '); if(t.style.display != \'none\') t.style.display = \'none\'; else t.style.display = \'block\'; "> Тут находится репост </div>';
 
-    console.log("ну же -> " + node);
+    return con.firstChild;
+}
 
 
-    for (var i = 0; i < node.length; i++) {
-        if (node[i].parentNode) {
-            node[i].parentNode.parentNode.parentNode.removeChild(node[i].parentNode.parentNode);
-            console.log("delete")
+
+var b = true;
+
+// скрыть репосты
+window.setInterval( function () {
+    if (b) {
+        var node = document.getElementsByClassName('copy_quote');
+
+        for (var i = 0; i < node.length; i++) {
+            var el = node[i].parentNode.parentNode.parentNode;
+
+            if (el.style.display != 'none') {
+                el.style.display = 'none';
+
+                el.setAttribute("id", ""+i);
+
+                el.parentNode.parentNode.insertBefore(createElement(i), null);
+
+
+            }
         }
-        else {
-            console.log("not parent");
-        }
+        b= false;
+
+       /* for (var i =0 ; i<node.length; i++){
+            $("."+i).click(function () {
+
+
+                var t = document.getElementById(i);
+
+                console.log("i->" + i);
+                console.log("t->"+ t);
+
+                t.style.display = 'block';
+            });
+        }*/
     }
 
-    node = document.getElementById("ads_left");
+},100);
 
-    if (node != undefined){
+// удаление рекламы в левой части сайта
+window.setInterval( function () {
+    // if (localStor[del_ledt_ads])
+    var node = document.getElementById("ads_left");
+
+    if (node != undefined) {
         node.remove();
     }
 
+},1000);
 
+// удаление постов с пометкой "платная реклама"
+window.setInterval( function() {
+    if (true) {
+        var node = document.getElementsByClassName('wall_marked_as_ads');
 
+        for (var i = 0; i < node.length; i++) {
+
+            node[i].parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+        }
+
+    }
 }, 100);
 
-/*console.log("-> " + node);
-console.log(document.body);
 
+window.setInterval( function () {
 
+    var node = document.getElementsByClassName('wall_post_text');
 
-
-for (var i = 0; i < node.length; i++) {
-    console.log("->"+node[i]);
-    if (node[i].parentNode) {
-        node[i].parentNode.removeChild(node[i]);
-        console.log("тип удалил")
+    for (var i = 0; i < node.length; i++) {
+        console.log(i + " text" + node[i].innerHTML);
     }
-    else {
-        console.log("not parent");
-    }
-}*/
 
+
+},100000);
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     // If the received message has the expected format...
@@ -86,28 +122,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         // the web-page's DOM content as argument
         console.log("uhudkfhvsfhvljdfv???");
 
-
-
-
         sendResponse(document.all[0].outerHTML);
     }
 });
-
-/*$(document).ready(function(){
-    jQuery.each(jQuery('textarea[data-autoresize]'), function() {
-    var offset = this.offsetHeight - this.clientHeight;
- 
-    var resizeTextarea = function(el) {
-        jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
-    };
-    jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
-});});
-
-
-
-console.log("работаю");
-
-var node = document.getElementsByClassName("f_post post page_block all own");
-
-
-*/
