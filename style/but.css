@@ -1,0 +1,26 @@
+.buttonInDiv{
+    color: #fff;
+    background-color: #3071a9;
+    border: 1px solid transparent;
+    border-color: #285e8e;
+    margin: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    cursor: pointer;
+
+}
+.buttonInDiv:hover,
+.buttonInDiv:focus,
+.buttonInDiv:active,
+.buttonInDiv.active,
+.open > .dropdown-toggle.buttonInDiv {
+  color: #fff;
+  background-color: #3071a9;
+  border-color: #285e8e;
+}
+.buttonInDiv .badge {
+  color: #428bca;
+  background-color: #fff;
+}
