@@ -31,8 +31,9 @@ function canUpdate() {
 function createElement(id) {
     var con = document.createElement('div');
 
-    con.innerHTML = '<div class="' + id + '" onclick="var t = document.getElementById(' + id + '); if(t.style.display != \'none\') t.style.display = \'none\'; else t.style.display = \'block\'; "> Тут находится репост </div>';
-
+    con.innerHTML = '<div class="' + id + '" onclick="var t = document.getElementById(' + id + '); if(t.style.display != \'none\') t.style.display = \'none\'; else t.style.display = \'block\'; " align="center"> \
+    <button id="buttoniner" class="buttonInDiv">Открыть репост</button> </div>';
+  
     return con.firstChild;
 }
 
