@@ -12,7 +12,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
     
       chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
           currentURL = tabs[0].url;
-          console.log("URL:   " + currentURL);
+          console.log("URL:   " +  currentURL);
       });
 
 
@@ -32,5 +32,3 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
 
 
 });
-
-

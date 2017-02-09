@@ -9,20 +9,34 @@ $(document).ready(function(){
     jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
 });});
 
-//load plugin for input "color"
-$(function() {
-    $('#background-color').colorpicker({
-        color: '#AA3399',
-    });
+$(document).ready(function(){
+    //load plugin for input "color"
+    $(function() {
+        //set default value for background-color
+        var colorPage = '#edeef0';
+        //if color alredy exist in localStorage
+        if(localStorage.getItem('color') !=  undefined  && localStorage.getItem('color').length > 1){
+            var lStColor = localStorage.getItem('color');
+            colorPage = localStorage.getItem('color');   
+        }
+        $('#background-color').colorpicker({
+            color: colorPage,
+        });
+});
+
+$('#color-picker').colorpicker().on('changeColor', function(ev) {
+      //$(this).parent().find('.color').css("background-color", $(this).colorpicker('getValue', '#ffffff') );
+      localStorage.setItem("color", ev.color.toHex());
+});
 });
 
 //functions for change text in buttons by click
 $(document).ready(function(){
     //array for localStorage
     var arrayURL = [];
-    if(localStorage.getItem('arrayOfURLAdv') !=  undefined  && localStorage.getItem('arrayOfURLAdv').length > 1){
+    if(localStorage.getItem('arrayOfURLRep') !=  undefined  && localStorage.getItem('arrayOfURLRep').length > 1){
         //get array of url
-        var lStArray = localStorage.getItem('arrayOfURLAdv');
+        var lStArray = localStorage.getItem('arrayOfURLRep');
         arrayURL = JSON.parse(lStArray);
     }
 
@@ -33,6 +47,7 @@ $(document).ready(function(){
         var ArrowId = $(this).attr('id');
         if (ArrowId == 'on-off-button') 
         {
+            console.log("ccc "+ $("#color-picker").colorpicker('getValue', '#ffffff'));
             $(onOffBut).html("Выключить");
             $(this).attr('id','off-on-button');
             document.getElementById('on-off-adv-button').disabled=false;
@@ -61,37 +76,15 @@ $(document).ready(function(){
        if ( $(this).val() == "true")
         {
             $(onOffAdvBut).html("Выключить");
-            $(this).val("false");
-            var index = arrayURL.indexOf(currentURL);
-            console.log(index);
-            //if this url exists
-            if (index > -1) {
-                //delete from array
-                arrayURL.splice(index, 1);
-            }
-            //if this url doesn't exist in localStorage
-            else {
-                console.log("no el");
-            }
-            //set new array in localStorage
-            localStorage.setItem("arrayOfURLAdv", JSON.stringify(arrayURL));
+            $(this).val("false");  
+            localStorage.setItem("onOffButAdv", "true");
            
         } 
         else 
         {
             $(onOffAdvBut).html('Включить');
-            $(this).val("true");
-            console.log(currentURL);
-            var index = arrayURL.indexOf(currentURL);
-            //if delay of loading or this url already exists
-            if (index > -1 || currentURL == undefined) {
-                console.log(index);
-            }
-            //if this is new url
-            else {
-                arrayURL.push(currentURL);
-            }
-            localStorage.setItem("arrayOfURLAdv", JSON.stringify(arrayURL));
+            $(this).val("true");      
+            localStorage.setItem("onOffButAdv", "false");
            
         }
     });
@@ -104,13 +97,36 @@ $(document).ready(function(){
         {
             $(onOffRepBut).html("Нет");
             $(this).val("false");
-            localStorage.setItem("onOffRepBut", "false");
+            console.log(currentURL);
+            var index = arrayURL.indexOf(currentURL);
+            //if delay of loading or this url already exists
+            if (index > -1 || currentURL == undefined) {
+                console.log(index);
+            }
+            //if this is new url
+            else {
+                arrayURL.push(currentURL);
+            }
+            localStorage.setItem("arrayOfURLRep", JSON.stringify(arrayURL));
         } 
         else 
         {
             $(onOffRepBut).html('Да');
             $(this).val("true");
-            localStorage.setItem("onOffRepBut", "true");
+            var index = arrayURL.indexOf(currentURL);
+            console.log(index);
+            //if this url exists
+            if (index > -1) {
+                //delete from array
+                arrayURL.splice(index, 1);
+            }
+            //if this url doesn't exist in localStorage
+            else {
+                console.log("no el");
+            }
+            //set new array in localStorage
+            localStorage.setItem("arrayOfURLRep", JSON.stringify(arrayURL));
+            
         }
     });
 });
