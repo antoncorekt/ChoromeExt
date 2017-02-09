@@ -11,6 +11,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
 {
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
         currentURL = tabs[0].url;
+        if(currentURL !== null)
+            localStorage.setItem("lastUrl", currentURL);
     });
 
 
