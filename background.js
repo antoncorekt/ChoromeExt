@@ -23,7 +23,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
 
             window.setInterval( function() {
 
-               
 
             }, 
             1000);
@@ -32,51 +31,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
     });
 
 
-});
-
-
-chrome.tabs.onActivated.addListener(function (tabId, changeInfo, tab){
-    console.log("-> " + tab.url);
-});
-
-/*
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
-{
-    if (chrome.runtime.lastError)
-    {
-        console.log("error");
-        return;
-    }
-    if (changeInfo.status === 'loading') {
-        if (chrome.runtime.lastError)
-        {
-            console.log("error");
-            return;
-        }
-        chrome.tabs.get(tabId, function (tabs) {
-
-            if (tabs.url === "https://vk.com/donetsk") {
-
-                function modifyDOM() {
-
-                    // content logic hear with document
-
-                    return document.body.innerHTML;
-                }
-
-
-                chrome.tabs.executeScript({
-                    code: '(' + modifyDOM + ')();' 
-                   
-                }, (results) => {
-       
-               
-            });
-
-
-            }
-    });
-    }
 });
 
 
