@@ -23,7 +23,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
 
             window.setInterval( function() {
 
-               
 
             }, 
             1000);
@@ -33,9 +32,3 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
 
 
 });
-
-
-chrome.tabs.onActivated.addListener(function (tabId, changeInfo, tab){
-    console.log("-> " + tab.url);
-});
-
