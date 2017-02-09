@@ -15,7 +15,7 @@ $(document).ready(function(){
         //set default value for background-color
         var colorPage = '#edeef0';
         //if color alredy exist in localStorage
-        if(localStorage.getItem('color') !=  undefined  && localStorage.getItem('color').length > 1){
+        if(localStorage.getItem('color') !==  undefined  && localStorage.getItem('color').length > 1){
             var lStColor = localStorage.getItem('color');
             colorPage = localStorage.getItem('color');   
         }
@@ -34,7 +34,12 @@ $('#color-picker').colorpicker().on('changeColor', function(ev) {
 $(document).ready(function(){
     //array for localStorage
     var arrayURL = [];
-    if(localStorage.getItem('arrayOfURLRep') !=  undefined  && localStorage.getItem('arrayOfURLRep').length > 1){
+    if(currentURL === undefined && localStorage.getItem('lastUrl') !=  undefined)
+        currentURL = localStorage.getItem('lastUrl');
+    else
+        console.log("lasturl " + currentURL);
+
+    if(localStorage.getItem('arrayOfURLRep') !==  undefined  && localStorage.getItem('arrayOfURLRep').length > 1){
         //get array of url
         var lStArray = localStorage.getItem('arrayOfURLRep');
         arrayURL = JSON.parse(lStArray);
@@ -42,14 +47,29 @@ $(document).ready(function(){
 
     //for main button
     var onOffBut = document.getElementById("on-off-button");
+    var lStOnOffBut = localStorage.getItem('onOffBut');
+    
+    if(lStOnOffBut !==  undefined){
+        if(lStOnOffBut === "true"){
+            $(onOffBut).html("Выключить");
+            $(onOffBut).val("true");
+            document.getElementById('on-off-adv-button').disabled=false;
+            document.getElementById('submit').disabled=false;
+            document.getElementById('on-off-rep-button').disabled=false;
+        }
+        else{
+            $(onOffBut).html('Включить');
+            $(onOffBut).val("false");
+        }        
+    }
+    
     $(onOffBut).click(function()
     {
         var ArrowId = $(this).attr('id');
-        if (ArrowId == 'on-off-button') 
+        if ( $(this).val() == "false") 
         {
-            console.log("ccc "+ $("#color-picker").colorpicker('getValue', '#ffffff'));
             $(onOffBut).html("Выключить");
-            $(this).attr('id','off-on-button');
+            $(this).val("true"); 
             document.getElementById('on-off-adv-button').disabled=false;
             document.getElementById('submit').disabled=false;
             document.getElementById('on-off-rep-button').disabled=false;
@@ -59,7 +79,7 @@ $(document).ready(function(){
         else 
         {
             $(onOffBut).html('Включить');
-            $(this).attr('id','on-off-button');
+            $(this).val("false");  
             //application off
             localStorage.setItem("onOffBut", "false");
             document.getElementById('on-off-adv-button').disabled=true;
@@ -71,6 +91,19 @@ $(document).ready(function(){
 
     //button of advertising 
     var onOffAdvBut = document.getElementById("on-off-adv-button");
+    var lStOnOffAdvBut = localStorage.getItem('onOffButAdv');
+
+    if(lStOnOffBut !==  undefined){
+        if(lStOnOffAdvBut === "true"){
+            $(onOffAdvBut).html("Выключить");
+            $(onOffAdvBut).val("false");
+        }
+        else{
+            $(onOffAdvBut).html('Включить');
+            $(onOffAdvBut).val("true");   
+        }
+    }
+
     $(onOffAdvBut).click(function()
     {
        if ( $(this).val() == "true")
