@@ -4,6 +4,8 @@
  * Created by Anton on 04.02.2017.
  */
 
+window.stop();
+
 var count=0;
 var pre_count=-1;
 
@@ -31,48 +33,45 @@ function canUpdate() {
 function createElement(id) {
     var con = document.createElement('div');
 
-    con.innerHTML = '<div class="' + id + '" onclick="var t = document.getElementById(' + id + '); if(t.style.display != \'none\') t.style.display = \'none\'; else t.style.display = \'block\'; " align="center"> \
-    <button id="buttoniner" class="buttonInDiv">Открыть репост</button> </div>';
+    con.innerHTML = '<div class="' + id + '" ' +
+        'onclick="var t = document.getElementById(' + id + ');\
+     if(t.style.display != \'none\'){ \
+        t.style.display = \'none\';\
+         document.getElementById(\'buttoniner'+id+'\').innerHTML = \'Открыть репост \';\
+     }\
+      else\
+      { \
+      t.style.display = \'block\';\
+      document.getElementById(\'buttoniner'+id+'\').innerHTML = \'Скрыть репост \';}\
+       " align="center"> \
+    <button id="buttoniner'+id+'" class="buttonInDiv" >Открыть репост</button> \
+    \
+    </div>';
   
     return con.firstChild;
 }
 
 
 
-var b = true;
 
-// скрыть репосты
 window.setInterval( function () {
-    if (b) {
+    if (true) {
         var node = document.getElementsByClassName('copy_quote');
+
 
         for (var i = 0; i < node.length; i++) {
             var el = node[i].parentNode.parentNode.parentNode;
 
+
+            if (el.getAttribute("id") != null)
+                continue;
+
             if (el.style.display != 'none') {
                 el.style.display = 'none';
-
-                el.setAttribute("id", ""+i);
-
-                el.parentNode.parentNode.insertBefore(createElement(i), null);
-
-
+                el.setAttribute("id", "" + i);
+                el.parentNode.childNodes[1].appendChild(createElement(i));
             }
         }
-        b= false;
-
-       /* for (var i =0 ; i<node.length; i++){
-            $("."+i).click(function () {
-
-
-                var t = document.getElementById(i);
-
-                console.log("i->" + i);
-                console.log("t->"+ t);
-
-                t.style.display = 'block';
-            });
-        }*/
     }
 
 },100);
@@ -96,6 +95,13 @@ window.setInterval( function() {
         for (var i = 0; i < node.length; i++) {
 
             node[i].parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+        }
+
+        var node1 = document.getElementsByClassName('wall_text_name_explain_promoted_post post_link');
+
+        for (var i = 0; i < node1.length; i++) {
+
+            node1[i].parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
         }
 
     }
