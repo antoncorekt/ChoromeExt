@@ -6,18 +6,53 @@
 
 var currentURL;
 
-function modifyDOM(ads, arr, url) {
+function modifyDOM(ads, arr, url, words) {
     var arrayURL = [];
     arrayURL = JSON.parse(arr);
 
+    var arrayOfStrings = words.split(',');
+
+    var b= true;
+
+    window.setInterval( function () {
+
+        if (b) {
+            var node = document.getElementsByClassName('wall_post_text');
+
+            for (var i = 0; i < node.length; i++) {
+
+                for (var j=0; j<arrayOfStrings.length; j++) {
+                    var re = new RegExp('.*'+arrayOfStrings[j]+'.*', 'i');
+
+                    //var result = node[i].innerHTML.match();
+                    var result =re.exec(node[i].innerHTML);
+
+                    if (result != null) {
+
+                        var el = node[i].parentNode.parentNode.parentNode;
+
+                        if (el.getAttribute("id") != null)
+                            continue;
+
+                        if (el.style.display != 'none') {
+                            el.style.display = 'none';
+                            el.setAttribute("id", "" + i);
+                           // el.parentNode.childNodes[1].appendChild(createElement(i));
+                            el.parentNode.parentNode.parentNode.childNodes[1].appendChild(createElement(i, arrayOfStrings[j]));
+                        }
+
+                    }
+                }
+            }
+
+            b = false;
+        }
+
+    },100);
 
     window.setInterval(function () {
         if (ads == undefined || ads == null || ads === false)
             return;
-
-
-
-
 
         // if (localStor[del_ledt_ads])
         var node = document.getElementById("ads_left");
@@ -46,21 +81,24 @@ function modifyDOM(ads, arr, url) {
 
     }, 100);
 
-    function createElement(id) {
+    function createElement(id, text) {
         var con = document.createElement('div');
+
+        var open = (text == undefined)?"Открыть репост":"Отрыть пост с фразой [" + text+"]";
+        var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
 
         con.innerHTML = '<div class="' + id + '" ' +
             'onclick="var t = document.getElementById(' + id + ');\
                          if(t.style.display != \'none\'){ \
                             t.style.display = \'none\';\
-                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \'Открыть репост \';\
+                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
                          }\
                           else\
                           { \
                           t.style.display = \'block\';\
-                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \'Скрыть репост \';}\
+                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
                            " align="center"> \
-                        <button id="buttoniner' + id + '" class="buttonInDiv" >Открыть репост</button> \
+                        <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
                         \
                         </div>';
 
@@ -129,6 +167,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
 
             var ads = localStorage.getItem("onOffButAdv");
             var arr = localStorage.getItem("arrayOfURLRep");
+            var words = localStorage.getItem("arrayOfWords");
 
             arrayURL = JSON.parse(arr);
             //if (on === "false" ) return;
@@ -137,7 +176,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
 
 
             chrome.tabs.executeScript({
-                code: '(' + modifyDOM + ')(' + ads + ',\'' + arr + '\',\'' + tabs.url + '\');'
+                code: '(' + modifyDOM + ')(' + ads + ',\'' + arr + '\',\'' + tabs.url + '\',\''+words+'\');'
 
             }, (results) => {
 
