@@ -17,7 +17,7 @@
 
 
     "icons": {
-        "128": "icon.png"
+        "128": "icon_red.png"
     },
 
     "content_scripts": [
@@ -35,7 +35,7 @@
 
     "browser_action": {
         "default_title": "abracadabra",
-        "default_icon": "icon.png",
+        "default_icon": "icon_red.png",
         "default_popup": "popup.html"
     }
 }
