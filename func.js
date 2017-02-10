@@ -53,13 +53,15 @@ $(document).ready(function(){
         if(lStOnOffBut === "true"){
             $(onOffBut).html("Выключить");
             $(onOffBut).val("true");
+            $(onOffBut).addClass("btn btn-danger btn-sm");
             document.getElementById('on-off-adv-button').disabled=false;
             document.getElementById('submit').disabled=false;
             document.getElementById('on-off-rep-button').disabled=false;
         }
         else{
             $(onOffBut).html('Включить');
-            $(onOffBut).val("false");
+            $(onOffBut).val("false");    
+           // $(onOffBut).addClass("btn btn-success btn-sm");       
         }        
     }
     
@@ -70,6 +72,8 @@ $(document).ready(function(){
         {
             $(onOffBut).html("Выключить");
             $(this).val("true"); 
+            $(this).removeClass("btn btn-success btn-sm");
+            $(this).addClass("btn btn-danger btn-sm");
             document.getElementById('on-off-adv-button').disabled=false;
             document.getElementById('submit').disabled=false;
             document.getElementById('on-off-rep-button').disabled=false;
@@ -80,6 +84,8 @@ $(document).ready(function(){
         {
             $(onOffBut).html('Включить');
             $(this).val("false");  
+            $(this).removeClass("btn btn-danger btn-sm");
+            $(this).addClass("btn btn-success btn-sm");
             //application off
             localStorage.setItem("onOffBut", "false");
             document.getElementById('on-off-adv-button').disabled=true;
@@ -95,11 +101,12 @@ $(document).ready(function(){
 
     if(lStOnOffBut !==  undefined){
         if(lStOnOffAdvBut === "true"){
-            $(onOffAdvBut).html("Выключить");
+            $(onOffAdvBut).html("Нет");
             $(onOffAdvBut).val("false");
+            $(onOffAdvBut).addClass("btn btn-danger btn-sm");
         }
         else{
-            $(onOffAdvBut).html('Включить');
+            $(onOffAdvBut).html('Да');
             $(onOffAdvBut).val("true");   
         }
     }
@@ -108,15 +115,19 @@ $(document).ready(function(){
     {
        if ( $(this).val() == "true")
         {
-            $(onOffAdvBut).html("Выключить");
+            $(onOffAdvBut).html("Нет");
             $(this).val("false");  
+            $(this).removeClass("btn btn-success btn-sm");
+            $(this).addClass("btn btn-danger btn-sm");
             localStorage.setItem("onOffButAdv", "true");
            
         } 
         else 
         {
-            $(onOffAdvBut).html('Включить');
+            $(onOffAdvBut).html('Да');
             $(this).val("true");      
+            $(this).removeClass("btn btn-danger btn-sm");
+            $(this).addClass("btn btn-success btn-sm");
             localStorage.setItem("onOffButAdv", "false");
            
         }
@@ -124,12 +135,27 @@ $(document).ready(function(){
 
     //button of repost 
     var onOffRepBut = document.getElementById("on-off-rep-button");
+    var index = arrayURL.indexOf(currentURL);
+            //if this url already exists in localStorage
+            if (index > -1) {
+                //set text and value for button
+                 $(onOffRepBut).html("Нет");
+                 $(onOffRepBut).val("false");
+                 $(onOffRepBut).addClass("btn btn-danger btn-sm");
+            }
+            //if this is new url
+            else {
+                console.log("no this url");
+            }
+
     $(onOffRepBut).click(function()
     {
         if ($(this).val() == "true") 
         {
             $(onOffRepBut).html("Нет");
             $(this).val("false");
+            $(this).removeClass("btn btn-success btn-sm");
+            $(this).addClass("btn btn-danger btn-sm");
             console.log(currentURL);
             var index = arrayURL.indexOf(currentURL);
             //if delay of loading or this url already exists
@@ -146,6 +172,8 @@ $(document).ready(function(){
         {
             $(onOffRepBut).html('Да');
             $(this).val("true");
+            $(this).removeClass("btn btn-danger btn-sm");
+            $(this).addClass("btn btn-success btn-sm");
             var index = arrayURL.indexOf(currentURL);
             console.log(index);
             //if this url exists
