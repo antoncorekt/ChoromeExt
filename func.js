@@ -12,13 +12,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     //load plugin for input "color"
     $(function() {
-        //set default value for background-color
+
+       // console.log($('body').css('backgroundColor'));
+
         var colorPage = '#edeef0';
         //if color alredy exist in localStorage
-        if(localStorage.getItem('color') !==  undefined  && localStorage.getItem('color').length > 1){
-            var lStColor = localStorage.getItem('color');
-            colorPage = localStorage.getItem('color');   
-        }
+
         $('#background-color').colorpicker({
             color: colorPage,
         });

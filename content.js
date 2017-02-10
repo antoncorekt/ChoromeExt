@@ -7,10 +7,6 @@
 var count=0;
 var pre_count=-1;
 
-document.body.bgColor="lavender";
-
-
-
 
 function canUpdate() {
     //console.log(count + " " + pre_count);
