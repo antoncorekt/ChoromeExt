@@ -30,7 +30,7 @@
     ],
 
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["background.js", "libraries/jquery.min.js"]
     },
 
     "browser_action": {
