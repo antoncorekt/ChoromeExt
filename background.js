@@ -12,11 +12,11 @@ function modifyDOM(ads, arr, url, words) {
 
     var arrayOfStrings = words.split(',');
 
-    var b= true;
+    
 
     window.setInterval( function () {
 
-        if (b) {
+    
             var node = document.getElementsByClassName('wall_post_text');
 
             for (var i = 0; i < node.length; i++) {
@@ -45,8 +45,7 @@ function modifyDOM(ads, arr, url, words) {
                 }
             }
 
-            b = false;
-        }
+    
 
     },100);
 
@@ -84,7 +83,7 @@ function modifyDOM(ads, arr, url, words) {
     function createElement(id, text) {
         var con = document.createElement('div');
 
-        var open = (text == undefined)?"Открыть репост":"Отрыть пост с фразой [" + text+"]";
+        var open = (text == undefined)?"Открыть репост":"Открыть пост с фразой [" + text+"]";
         var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
 
         con.innerHTML = '<div class="' + id + '" ' +
