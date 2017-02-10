@@ -12,13 +12,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     //load plugin for input "color"
     $(function() {
-        //set default value for background-color
+
+       // console.log($('body').css('backgroundColor'));
+
         var colorPage = '#edeef0';
         //if color alredy exist in localStorage
-        if(localStorage.getItem('color') !==  undefined  && localStorage.getItem('color').length > 1){
-            var lStColor = localStorage.getItem('color');
-            colorPage = localStorage.getItem('color');   
-        }
+
         $('#background-color').colorpicker({
             color: colorPage,
         });
@@ -55,8 +54,9 @@ $(document).ready(function(){
             $(onOffBut).val("true");
             $(onOffBut).addClass("btn btn-danger btn-sm");
             document.getElementById('on-off-adv-button').disabled=false;
-            document.getElementById('submit').disabled=false;
+            document.getElementById('submitBut').disabled=false;
             document.getElementById('on-off-rep-button').disabled=false;
+            document.getElementById('clearBut').disabled=false;
         }
         else{
             $(onOffBut).html('Включить');
@@ -75,8 +75,9 @@ $(document).ready(function(){
             $(this).removeClass("btn btn-success btn-sm");
             $(this).addClass("btn btn-danger btn-sm");
             document.getElementById('on-off-adv-button').disabled=false;
-            document.getElementById('submit').disabled=false;
+            document.getElementById('submitBut').disabled=false;
             document.getElementById('on-off-rep-button').disabled=false;
+            document.getElementById('clearBut').disabled=false;
             //because app is enabled
             localStorage.setItem("onOffBut", "true");
         } 
@@ -90,7 +91,8 @@ $(document).ready(function(){
             localStorage.setItem("onOffBut", "false");
             document.getElementById('on-off-adv-button').disabled=true;
             document.getElementById('on-off-rep-button').disabled=true;
-            document.getElementById('submit').disabled=true;
+            document.getElementById('submitBut').disabled=true;
+            document.getElementById('clearBut').disabled=true;
         }
         
     });
@@ -190,4 +192,30 @@ $(document).ready(function(){
             
         }
     });
+
+    //button of repost 
+    var submitBut = document.getElementById("submitBut");
+    var clearBut = document.getElementById("clearBut");
+    var textAreaW = document.getElementById("words");
+
+    if(localStorage.getItem('arrayOfWords') !==  undefined){
+        //get array of words
+        var lStArray = localStorage.getItem('arrayOfWords');
+        $(textAreaW).val(lStArray);      
+    }
+
+    $(submitBut).click(function(){
+         var text = $(textAreaW).val();
+         var arrayOfStrings = text.split(',');
+         console.log("after submit " + arrayOfStrings.length + ' elements: ' + arrayOfStrings.join(' / '));
+         localStorage.setItem("arrayOfWords", text);
+    });
+
+    $(clearBut).click(function(){
+         $(textAreaW).val('');
+         if(localStorage.getItem('arrayOfWords') !==  undefined){
+            localStorage.removeItem("arrayOfWords");
+         }
+    });
+
 });

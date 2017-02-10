@@ -7,13 +7,8 @@
 var count=0;
 var pre_count=-1;
 
-document.body.bgColor="lavender";
-
-
-
-
 function canUpdate() {
-    //console.log(count + " " + pre_count);
+  
 
     if (count != pre_count) {
         pre_count = count;
@@ -24,17 +19,6 @@ function canUpdate() {
 
 
 }
-
-window.setInterval( function () {
-
-    var node = document.getElementsByClassName('wall_post_text');
-
-    for (var i = 0; i < node.length; i++) {
-        console.log(i + " text" + node[i].innerHTML);
-    }
-
-
-},100000);
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     // If the received message has the expected format...
