@@ -21,15 +21,14 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
         console.log("error");
         return;
     }
-    if (changeInfo.status === 'loading') {
-        if (chrome.runtime.lastError)
-        {
+    if (changeInfo.status !== 'loading') {
+    } else {
+        if (chrome.runtime.lastError) {
             console.log("error");
             return;
         }
         chrome.tabs.get(tabId, function (tabs) {
             console.log("tab->" + tabs.url);
-
 
 
             var ads = localStorage.getItem("onOffButAdv");
@@ -44,7 +43,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
                 var arrayURL = [];
                 arrayURL = JSON.parse(arr);
 
-                window.setInterval( function () {
+
+                window.setInterval(function () {
 
                     if (ads === "true") return;
 
@@ -55,9 +55,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
                         node.remove();
                     }
 
-                },1000);
+                }, 1000);
 
-                window.setInterval( function() {
+                window.setInterval(function () {
                     if (ads === "true") return;
 
                     var node = document.getElementsByClassName('wall_marked_as_ads');
@@ -83,25 +83,25 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
                         'onclick="var t = document.getElementById(' + id + ');\
                          if(t.style.display != \'none\'){ \
                             t.style.display = \'none\';\
-                             document.getElementById(\'buttoniner'+id+'\').innerHTML = \'Открыть репост \';\
+                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \'Открыть репост \';\
                          }\
                           else\
                           { \
                           t.style.display = \'block\';\
-                          document.getElementById(\'buttoniner'+id+'\').innerHTML = \'Скрыть репост \';}\
+                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \'Скрыть репост \';}\
                            " align="center"> \
-                        <button id="buttoniner'+id+'" class="buttonInDiv" >Открыть репост</button> \
+                        <button id="buttoniner' + id + '" class="buttonInDiv" >Открыть репост</button> \
                         \
                         </div>';
 
                     return con.firstChild;
                 }
 
-                window.setInterval( function () {
+                window.setInterval(function () {
 
                     var b = true;
-                    for(var i = 0; i<arrayURL.length; i++){
-                        if (arrayURL[i]==url)
+                    for (var i = 0; i < arrayURL.length; i++) {
+                        if (arrayURL[i] == url)
                             b = false;
                     }
 
@@ -125,20 +125,66 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
                     }
 
 
-                },100);
+                }, 100);
 
                 return document.body.innerHTML;
             }
+
             chrome.tabs.executeScript({
-                code: '(' + modifyDOM + ')('+ads+',\''+arr+'\',\'' + tabs.url+'\');'
+                code: '(' + modifyDOM + ')(' + ads + ',\'' + arr + '\',\'' + tabs.url + '\');'
 
             }, (results) => {
 
+                /*window.onload = function () {
+                    window.setInterval(function () {
 
-            });
+                        $(document).ready(function () {
+                            if (localStorage.getItem('color') !== undefined && localStorage.getItem('color') !== null) {
+
+                                console.log(localStorage.getItem('color'));
+
+                                $('body').css('background', localStorage.getItem('color'));
+
+                            }
+
+                        });
+
+
+                    }, 75);
+                 }*/
+
+
+        });
+
+
 
         });
     }
 });
+
+window.addEventListener('storage',function(e){get_event_of_storage(e);},false);
+
+var get_event_of_storage = function(e) {
+
+    var loc_color = localStorage.getItem("color");
+
+    console.log(loc_color);
+
+    function setColor(color) {
+
+        console.log("menyaem na "+ color);
+
+        $('body').css('background', color);
+    }
+
+    chrome.tabs.executeScript({
+        code: '(' + setColor + ')(\'' + loc_color + '\');'
+
+    }, (results) => {
+    });
+
+}
+
+
 
 

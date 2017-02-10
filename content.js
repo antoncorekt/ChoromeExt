@@ -7,12 +7,9 @@
 var count=0;
 var pre_count=-1;
 
-window.onload = function() {
-    window.setInterval( function() {
-        var t = document.getElementsByClassName('post_content');
-        count = t.length;
-    }, 75);
-}
+document.body.bgColor="lavender";
+
+
 
 
 function canUpdate() {
@@ -52,3 +49,5 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         sendResponse(document.all[0].outerHTML);
     }
 });
+
+
