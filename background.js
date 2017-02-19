@@ -12,32 +12,8 @@ function modifyDOM(ads, arr, url, words) {
 
     var arrayOfStrings = words.split(',');
 
-    function createElement(id, text) {
-        var con = document.createElement('div');
-
-        var open = (text == undefined)?"Открыть репост":"Открыть пост с фразой [" + text+"]";
-        var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
-
-        con.innerHTML = '<div class="' + id + '" ' +
-            'onclick="var t = document.getElementById(' + id + ');\
-                         if(t.style.display != \'none\'){ \
-                            t.style.display = \'none\';\
-                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
-                         }\
-                          else\
-                          { \
-                          t.style.display = \'block\';\
-                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
-                           " align="center"> \
-                        <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
-                        \
-                        </div>';
-
-        return con.firstChild;
-    }
-    
-    window.onscroll = function() {
-        var node = document.getElementsByClassName('wall_post_text');
+    function work(ads, arr, url, words){
+         var node = document.getElementsByClassName('wall_post_text');
 
         for (var i = 0; i < node.length; i++) {
 
@@ -109,7 +85,38 @@ function modifyDOM(ads, arr, url, words) {
                 el.parentNode.childNodes[1].appendChild(createElement(i));
             }
         }
+    }
 
+    function createElement(id, text) {
+        var con = document.createElement('div');
+
+        var open = (text == undefined)?"Открыть репост":"Открыть пост с фразой [" + text+"]";
+        var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
+
+        con.innerHTML = '<div class="' + id + '" ' +
+            'onclick="var t = document.getElementById(' + id + ');\
+                         if(t.style.display != \'none\'){ \
+                            t.style.display = \'none\';\
+                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
+                         }\
+                          else\
+                          { \
+                          t.style.display = \'block\';\
+                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
+                           " align="center"> \
+                        <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
+                        \
+                        </div>';
+
+        return con.firstChild;
+    }
+
+    work(ads, arr, url, words);
+
+
+    window.onscroll = function() {
+       
+    work(ads, arr, url, words);
 
     }
 
@@ -150,7 +157,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
             arrayURL = JSON.parse(arr);
             //if (on === "false" ) return;
 
-            console.log("worrk");
+            console.log("worrk1");
 
 
             chrome.tabs.executeScript({
