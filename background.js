@@ -6,7 +6,15 @@
 
 var currentURL;
 
+
+
+
 function modifyDOM(ads, arr, url, words) {
+
+    var element = document.createElement('script');
+    element.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
+    document.head.appendChild(element);
+
     var arrayURL = [];
     arrayURL = JSON.parse(arr);
 
@@ -32,9 +40,9 @@ function modifyDOM(ads, arr, url, words) {
 
                     if (el.style.display != 'none') {
                         el.style.display = 'none';
-                        el.setAttribute("id", "" + i);
+                        el.setAttribute("id", "" + (-(i+1)));
                         // el.parentNode.childNodes[1].appendChild(createElement(i));
-                        el.parentNode.parentNode.parentNode.childNodes[1].appendChild(createElement(i, arrayOfStrings[j]));
+                        el.parentNode.parentNode.parentNode.childNodes[1].appendChild(createElement(-(i+1), arrayOfStrings[j]));
                     }
 
                 }
@@ -96,12 +104,14 @@ function modifyDOM(ads, arr, url, words) {
         con.innerHTML = '<div class="' + id + '" ' +
             'onclick="var t = document.getElementById(' + id + ');\
                          if(t.style.display != \'none\'){ \
-                            t.style.display = \'none\';\
+                            $(document).ready(function(){\
+                                $(\'#'+ id + '\').hide(\'slow\');});\
                              document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
                          }\
                           else\
                           { \
-                          t.style.display = \'block\';\
+                          $(document).ready(function(){\
+                                $(\'#'+ id + '\').show(\'slow\');});\
                           document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
                            " align="center"> \
                         <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
