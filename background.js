@@ -11,9 +11,11 @@ var currentURL;
 
 function modifyDOM(ads, arr, url, words) {
 
-    var element = document.createElement('script');
-    element.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
-    document.head.appendChild(element);
+    if (url.indexOf('https://vk.com') != -1){
+        var element = document.createElement('script');
+        element.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
+        document.head.appendChild(element);
+    }
 
     var arrayURL = [];
     arrayURL = JSON.parse(arr);
