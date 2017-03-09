@@ -136,10 +136,39 @@ function modifyDOM(ads, arr, url, words) {
 }
 
 
+chrome.tabs.onSelectionChanged.addListener(function(tabId, selectInfo){
+    chrome.tabs.getSelected(null, function(tab){
+            mainf(tab.url);
+    });
+});
+
+function mainf(url){          
+            var on = localStorage.getItem("onOffBut");
+
+            if (on == undefined || on == null || on === "false") return;
+
+            var ads = localStorage.getItem("onOffButAdv");
+            var arr = localStorage.getItem("arrayOfURLRep");
+            var words = localStorage.getItem("arrayOfWords");
+
+            arrayURL = JSON.parse(arr);
+
+            chrome.tabs.executeScript({
+                code: '(' + modifyDOM + ')(' + ads + ',\'' + arr + '\',\'' + url + '\',\''+words+'\');'
+            }, (results) => {
+
+             });
+
+}
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
 {
+  
+   
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        currentURL = tabs[0].url;
+        if (tabs != null || tabs != undefined){     
+            currentURL = tabs[0].url;
+        }
         if(currentURL !== null)
             localStorage.setItem("lastUrl", currentURL);
     });
@@ -156,31 +185,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
             console.log("error");
             return;
         }
-        chrome.tabs.get(tabId, function (tabs) {
-            console.log("tab->" + tabs.url);
-            var on = localStorage.getItem("onOffBut");
-
-            if (on == undefined || on == null || on === "false") return;
-
-            var ads = localStorage.getItem("onOffButAdv");
-            var arr = localStorage.getItem("arrayOfURLRep");
-            var words = localStorage.getItem("arrayOfWords");
-
-            arrayURL = JSON.parse(arr);
-            //if (on === "false" ) return;
-
-            console.log("worrk1");
-
-
-            chrome.tabs.executeScript({
-                code: '(' + modifyDOM + ')(' + ads + ',\'' + arr + '\',\'' + tabs.url + '\',\''+words+'\');'
-
-            }, (results) => {
-
-        });
-
-
-
+        chrome.tabs.get(tabId, function (tabs) {          
+                mainf(tabs.url);
         });
     }
 });
