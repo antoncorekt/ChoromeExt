@@ -33,12 +33,13 @@ $('#color-picker').colorpicker().on('changeColor', function(ev) {
 $(document).ready(function(){
     //array for localStorage
     var arrayURL = [];
-    if(currentURL === undefined && localStorage.getItem('lastUrl') !=  undefined)
+    if( localStorage.getItem('lastUrl') != null &&  currentURL === undefined && localStorage.getItem('lastUrl') !=  undefined)
         currentURL = localStorage.getItem('lastUrl');
     else
         console.log("lasturl " + currentURL);
 
-    if(localStorage.getItem('arrayOfURLRep') !==  undefined  && localStorage.getItem('arrayOfURLRep') !== null){
+
+    if(localStorage.getItem('arrayOfURLRep') !==  undefined  && localStorage.getItem('arrayOfURLRep') != null){
         //get array of url
         var lStArray = localStorage.getItem('arrayOfURLRep');
         arrayURL = JSON.parse(lStArray);

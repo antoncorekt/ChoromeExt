@@ -6,106 +6,73 @@
 
 var currentURL;
 
+
+
+
 function modifyDOM(ads, arr, url, words) {
+
+    if (url.indexOf('https://vk.com') != -1){
+        var element = document.createElement('script');
+        element.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
+        document.head.appendChild(element);
+    }
+
     var arrayURL = [];
     arrayURL = JSON.parse(arr);
 
     var arrayOfStrings = words.split(',');
 
-    
+    function work(ads, arr, url, words){
+         var node = document.getElementsByClassName('wall_post_text');
 
-    window.setInterval( function () {
+        for (var i = 0; i < node.length; i++) {
 
-    
-            var node = document.getElementsByClassName('wall_post_text');
+            for (var j=0; j<arrayOfStrings.length; j++) {
+                var re = new RegExp('.*'+arrayOfStrings[j]+'.*', 'i');
+                var resul = node[i].innerHTML;
 
-            for (var i = 0; i < node.length; i++) {
+                var result =resul.indexOf(arrayOfStrings[j]);
 
-                for (var j=0; j<arrayOfStrings.length; j++) {
-                    var re = new RegExp('.*'+arrayOfStrings[j]+'.*', 'i');
+                if (result != -1) {
 
-                    //var result = node[i].innerHTML.match();
-                    var result =re.exec(node[i].innerHTML);
+                    var el = node[i].parentNode.parentNode.parentNode;
 
-                    if (result != null) {
+                    if (el.getAttribute("id") != null)
+                        continue;
 
-                        var el = node[i].parentNode.parentNode.parentNode;
-
-                        if (el.getAttribute("id") != null)
-                            continue;
-
-                        if (el.style.display != 'none') {
-                            el.style.display = 'none';
-                            el.setAttribute("id", "" + i);
-                           // el.parentNode.childNodes[1].appendChild(createElement(i));
-                            el.parentNode.parentNode.parentNode.childNodes[1].appendChild(createElement(i, arrayOfStrings[j]));
-                        }
-
+                    if (el.style.display != 'none') {
+                        el.style.display = 'none';
+                        el.setAttribute("id", "" + (-(i+1)));
+                        // el.parentNode.childNodes[1].appendChild(createElement(i));
+                        el.parentNode.parentNode.parentNode.childNodes[1].appendChild(createElement(-(i+1), arrayOfStrings[j]));
                     }
+
                 }
             }
+        }
 
-    
-
-    },100);
-
-    window.setInterval(function () {
         if (ads == undefined || ads == null || ads === false)
             return;
 
-        // if (localStor[del_ledt_ads])
-        var node = document.getElementById("ads_left");
-
+        node = document.getElementById("ads_left");
         if (node != undefined) {
             node.remove();
         }
 
-    }, 1000);
 
-    window.setInterval(function () {
-        if (ads == undefined || ads == null || ads === false) return;
-
-        var node = document.getElementsByClassName('wall_marked_as_ads');
-
+        //-----------reklama
+        node = document.getElementsByClassName('wall_marked_as_ads');
         for (var i = 0; i < node.length; i++) {
             node[i].parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
         }
 
         var node1 = document.getElementsByClassName('wall_text_name_explain_promoted_post post_link');
-
         for (var i = 0; i < node1.length; i++) {
-
             node1[i].parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
         }
 
-    }, 100);
 
-    function createElement(id, text) {
-        var con = document.createElement('div');
-
-        var open = (text == undefined)?"Открыть репост":"Открыть пост с фразой [" + text+"]";
-        var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
-
-        con.innerHTML = '<div class="' + id + '" ' +
-            'onclick="var t = document.getElementById(' + id + ');\
-                         if(t.style.display != \'none\'){ \
-                            t.style.display = \'none\';\
-                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
-                         }\
-                          else\
-                          { \
-                          t.style.display = \'block\';\
-                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
-                           " align="center"> \
-                        <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
-                        \
-                        </div>';
-
-        return con.firstChild;
-    }
-
-    window.setInterval(function () {
-
+        //-------------------------repost
         var b = true;
         for (var i = 0; i < arrayURL.length; i++) {
             if (arrayURL[i] == url)
@@ -114,9 +81,7 @@ function modifyDOM(ads, arr, url, words) {
 
         if (b) return;
 
-        var node = document.getElementsByClassName('copy_quote');
-
-
+        node = document.getElementsByClassName('copy_quote');
         for (var i = 0; i < node.length; i++) {
             var el = node[i].parentNode.parentNode.parentNode;
 
@@ -130,9 +95,42 @@ function modifyDOM(ads, arr, url, words) {
                 el.parentNode.childNodes[1].appendChild(createElement(i));
             }
         }
+    }
+
+    function createElement(id, text) {
+        var con = document.createElement('div');
+
+        var open = (text == undefined)?"Открыть репост":"Открыть пост с фразой [" + text+"]";
+        var close = (text == undefined)?"Скрыть репост":"Скрыть пост с фразой [" + text+"]";
+
+        con.innerHTML = '<div class="' + id + '" ' +
+            'onclick="var t = document.getElementById(' + id + ');\
+                         if(t.style.display != \'none\'){ \
+                            $(document).ready(function(){\
+                                $(\'#'+ id + '\').hide(\'slow\');});\
+                             document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+open+' \';\
+                         }\
+                          else\
+                          { \
+                          $(document).ready(function(){\
+                                $(\'#'+ id + '\').show(\'slow\');});\
+                          document.getElementById(\'buttoniner' + id + '\').innerHTML = \''+close+'\';}\
+                           " align="center"> \
+                        <button id="buttoniner' + id + '" class="buttonInDiv" >'+open+'</button> \
+                        \
+                        </div>';
+
+        return con.firstChild;
+    }
+
+    work(ads, arr, url, words);
 
 
-    }, 100);
+    window.onscroll = function() {
+       
+    work(ads, arr, url, words);
+
+    }
 
     return document.body.innerHTML;
 }
@@ -171,7 +169,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tabs)
             arrayURL = JSON.parse(arr);
             //if (on === "false" ) return;
 
-            console.log("worrk");
+            console.log("worrk1");
 
 
             chrome.tabs.executeScript({

@@ -7,6 +7,7 @@
 var count=0;
 var pre_count=-1;
 
+
 function canUpdate() {
   
 
