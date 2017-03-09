@@ -38,7 +38,7 @@ $(document).ready(function(){
     else
         console.log("lasturl " + currentURL);
 
-    if(localStorage.getItem('arrayOfURLRep') !==  undefined  && localStorage.getItem('arrayOfURLRep').length > 1){
+    if(localStorage.getItem('arrayOfURLRep') !==  undefined  && localStorage.getItem('arrayOfURLRep') !== null){
         //get array of url
         var lStArray = localStorage.getItem('arrayOfURLRep');
         arrayURL = JSON.parse(lStArray);
